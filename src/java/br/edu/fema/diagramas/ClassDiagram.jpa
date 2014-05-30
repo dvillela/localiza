@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings id="_14009935887041" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:ns4="http://nbmodeler.java.net" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:entity class="Locacao" minimized="false" id="_14009935887094">
+        <jpa:table name="locacao"/>
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" id="_14009935887449">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="locacao"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+            <jpa:basic name="datai" optional="false" attribute-type="java.util.Date" id="_140099358874610">
+                <jpa:column name="datai" unique="false" nullable="false" insertable="true" updatable="true" table="locacao"/>
+                <jpa:temporal>DATE</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="dataf" optional="false" attribute-type="java.lang.String" id="_140099358874711">
+                <jpa:column name="dataf" unique="false" nullable="false" insertable="true" updatable="true" table="locacao" length="45"/>
+            </jpa:basic>
+            <jpa:basic name="obser" optional="true" attribute-type="java.lang.String" id="_140099358874712">
+                <jpa:column name="obser" unique="false" nullable="true" insertable="true" updatable="true" table="locacao" length="200"/>
+            </jpa:basic>
+            <jpa:basic name="pago" optional="false" attribute-type="java.lang.String" id="_140099358874713">
+                <jpa:column name="pago" unique="false" nullable="false" insertable="true" updatable="true" table="locacao" length="1"/>
+            </jpa:basic>
+            <jpa:basic name="valor" optional="true" attribute-type="java.math.BigDecimal" id="_140099358874714">
+                <jpa:column name="valor" unique="false" nullable="true" insertable="true" updatable="true" table="locacao" precision="12" scale="2"/>
+            </jpa:basic>
+            <jpa:many-to-one name="fkCli" target-entity="Cliente" optional="false" primaryKey="false" connected-entity-id="_14009935887365" connected-attribute-id="_140099358874929" id="_140099358874715">
+                <jpa:join-column name="fk_cli" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-one name="fkAuto" target-entity="Automovel" optional="false" primaryKey="false" connected-entity-id="_14009935887368" connected-attribute-id="_140099358875045" id="_140099358874816">
+                <jpa:join-column name="fk_auto" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Cliente" minimized="false" id="_14009935887365">
+        <jpa:table name="cliente"/>
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" id="_140099358874917">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="cliente"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+            <jpa:basic name="nome" optional="false" attribute-type="java.lang.String" id="_140099358874918">
+                <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="cliente" length="45"/>
+            </jpa:basic>
+            <jpa:basic name="foto" optional="true" attribute-type="byte []" id="_140099358874919">
+                <jpa:column name="foto" unique="false" nullable="true" insertable="true" updatable="true" table="cliente"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic name="cpf" optional="false" attribute-type="java.lang.String" id="_140099358874920">
+                <jpa:column name="cpf" unique="false" nullable="false" insertable="true" updatable="true" table="cliente" length="15"/>
+            </jpa:basic>
+            <jpa:basic name="telf" optional="true" attribute-type="java.lang.String" id="_140099358874921">
+                <jpa:column name="telf" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="15"/>
+            </jpa:basic>
+            <jpa:basic name="telc" optional="true" attribute-type="java.lang.String" id="_140099358874922">
+                <jpa:column name="telc" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="15"/>
+            </jpa:basic>
+            <jpa:basic name="datan" optional="true" attribute-type="java.util.Date" id="_140099358874923">
+                <jpa:column name="datan" unique="false" nullable="true" insertable="true" updatable="true" table="cliente"/>
+                <jpa:temporal>DATE</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="estado" optional="true" attribute-type="java.lang.String" id="_140099358874924">
+                <jpa:column name="estado" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="2"/>
+            </jpa:basic>
+            <jpa:basic name="cidade" optional="true" attribute-type="java.lang.String" id="_140099358874925">
+                <jpa:column name="cidade" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="25"/>
+            </jpa:basic>
+            <jpa:basic name="cep" optional="true" attribute-type="java.lang.String" id="_140099358874926">
+                <jpa:column name="cep" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="15"/>
+            </jpa:basic>
+            <jpa:basic name="rua" optional="true" attribute-type="java.lang.String" id="_140099358874927">
+                <jpa:column name="rua" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="45"/>
+            </jpa:basic>
+            <jpa:basic name="numero" optional="true" attribute-type="java.lang.String" id="_140099358874928">
+                <jpa:column name="numero" unique="false" nullable="true" insertable="true" updatable="true" table="cliente" length="15"/>
+            </jpa:basic>
+            <jpa:one-to-many name="locacaoCollection" target-entity="Locacao" mapped-by="fkCli" connected-entity-id="_14009935887094" connected-attribute-id="_140099358874715" id="_140099358874929"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Marca" minimized="false" id="_14009935887366">
+        <jpa:table name="marca"/>
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" id="_140099358875030">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="marca"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+            <jpa:basic name="nome" optional="true" attribute-type="java.lang.String" id="_140099358875031">
+                <jpa:column name="nome" unique="false" nullable="true" insertable="true" updatable="true" table="marca" length="50"/>
+            </jpa:basic>
+            <jpa:one-to-many name="modeloCollection" target-entity="Modelo" mapped-by="marcaId" connected-entity-id="_14009935887367" connected-attribute-id="_140099358875036" id="_140099358875032"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Modelo" minimized="false" id="_14009935887367">
+        <jpa:table name="modelo"/>
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" id="_140099358875033">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="modelo"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+            <jpa:basic name="descricao" optional="true" attribute-type="java.lang.String" id="_140099358875034">
+                <jpa:column name="descricao" unique="false" nullable="true" insertable="true" updatable="true" table="modelo" length="255"/>
+            </jpa:basic>
+            <jpa:basic name="potencia" optional="true" attribute-type="java.lang.Integer" id="_140099358875035">
+                <jpa:column name="potencia" unique="false" nullable="true" insertable="true" updatable="true" table="modelo"/>
+            </jpa:basic>
+            <jpa:many-to-one name="marcaId" target-entity="Marca" optional="false" primaryKey="false" connected-entity-id="_14009935887366" connected-attribute-id="_140099358875032" id="_140099358875036">
+                <jpa:join-column name="marca_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:one-to-many name="automovelCollection" target-entity="Automovel" mapped-by="modeloId" connected-entity-id="_14009935887368" connected-attribute-id="_140099358875046" id="_140099358875037"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Automovel" minimized="false" id="_14009935887368">
+        <jpa:table name="automovel"/>
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" id="_140099358875038">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="automovel"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+            <jpa:basic name="anoFabricacao" optional="true" attribute-type="java.lang.Integer" id="_140099358875039">
+                <jpa:column name="anoFabricacao" unique="false" nullable="true" insertable="true" updatable="true" table="automovel"/>
+            </jpa:basic>
+            <jpa:basic name="anoModelo" optional="true" attribute-type="java.lang.Integer" id="_140099358875040">
+                <jpa:column name="anoModelo" unique="false" nullable="true" insertable="true" updatable="true" table="automovel"/>
+            </jpa:basic>
+            <jpa:basic name="observacoes" optional="true" attribute-type="java.lang.String" id="_140099358875041">
+                <jpa:column name="observacoes" unique="false" nullable="true" insertable="true" updatable="true" table="automovel" length="255"/>
+            </jpa:basic>
+            <jpa:basic name="preco" optional="true" attribute-type="java.lang.Float" id="_140099358875042">
+                <jpa:column name="preco" unique="false" nullable="true" insertable="true" updatable="true" table="automovel" precision="12"/>
+            </jpa:basic>
+            <jpa:basic name="kilometragam" optional="true" attribute-type="java.lang.Integer" id="_140099358875043">
+                <jpa:column name="kilometragam" unique="false" nullable="true" insertable="true" updatable="true" table="automovel"/>
+            </jpa:basic>
+            <jpa:basic name="foto" optional="true" attribute-type="byte []" id="_140099358875044">
+                <jpa:column name="foto" unique="false" nullable="true" insertable="true" updatable="true" table="automovel"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:many-to-one name="modeloId" target-entity="Modelo" optional="false" primaryKey="false" connected-entity-id="_14009935887367" connected-attribute-id="_140099358875037" id="_140099358875046">
+                <jpa:join-column name="modelo_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:one-to-many name="locacaoCollection" target-entity="Locacao" mapped-by="fkAuto" connected-entity-id="_14009935887094" connected-attribute-id="_140099358874816" id="_140099358875045"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:diagram id="_14009935887052">
+        <plane elementRef="_14009935887041" id="_14009935887073_p">
+            <shape elementRef="_14009935887094" id="_14009935887094_gui">
+                <Bounds x="312.0" y="295.0" width="145.0" height="231.0"/>
+            </shape>
+            <shape elementRef="_14009935887365" id="_14009935887365_gui">
+                <Bounds x="42.0" y="217.0" width="155.0" height="336.0"/>
+            </shape>
+            <shape elementRef="_14009935887366" id="_14009935887366_gui">
+                <Bounds x="24.0" y="20.0" width="154.0" height="126.0"/>
+            </shape>
+            <shape elementRef="_14009935887367" id="_14009935887367_gui">
+                <Bounds x="300.0" y="49.0" width="169.0" height="168.0"/>
+            </shape>
+            <shape elementRef="_14009935887368" id="_14009935887368_gui">
+                <Bounds x="554.0" y="20.0" width="156.0" height="252.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>
