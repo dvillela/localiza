@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Remoção de Marca</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:panelGrid columns="2" width="200">
+            <h:outputText value="Id:"/>
+            <h:outputText id="txtIdd" value="#{marcaMB.marcaEd.id}"/>
+            <h:outputText value="Nome: "/> 
+            <h:outputText id="txtMarcad" value="#{marcaMB.marcaEd.nome}"/>
+            <p:commandButton value="Cancelar"/>
+            <p:commandButton value="Remover" action="#{marcaMB.apagar}"/>   
+        </h:panelGrid>
+    </h:body>
+
+</html>
