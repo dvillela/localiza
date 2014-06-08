@@ -4,91 +4,90 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>PrimeFaces</title>
+        </f:facet>
+    </h:head>
 
-    <f:view contentType="text/html">
-        <h:head>
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
-            </f:facet>
-        </h:head>
+    <h:body>
+        <p:growl id="growl" showDetail="true" />
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
+                Locação de veículos - Tópicos de programação - JSF 2.2, JPA 2.1 e Primefaces 5.0 - FEMA - 2014
+            </p:layoutUnit>
 
-        <h:body>
+            <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+                Footer
+            </p:layoutUnit>
 
-            <p:growl id="growl" showDetail="true" />
-            <p:layout fullPage="true">
+            <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <h:form>
+                    <p:menu>
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
 
-                <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
-                    Locação de veículos - Tópicos de programação - JSF 2.2, JPA 2.1 e Primefaces 5.0 - FEMA - 2014
-                </p:layoutUnit>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
 
-                <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
-                    Footer
-                </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <p:accordionPanel id="ac">
+                    <p:tab title="Relação de Marcas">
+                        <p:dataTable var="marca" value="#{marcaMB.marcas}"
+                                     rows="8" paginator="true" id="marcas"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink}
+                                     {PreviousPageLink} {PageLinks} {NextPageLink}
+                                     {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="8,10,12" paginatorPosition="bottom">
+                            <p:column headerText="Código" width="50">
+                                <h:outputText value="#{marca.id}" />
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{marca.nome}" />
+                            </p:column>
+                            <p:column headerText="Ações">
+                                <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>> Ações <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< --> 
+                                <h:form id="frmAct">
+                                    <p:commandLink action="#{marcaMB.delMarca(marca)}">
+                                        <h:graphicImage value="/img/trash.png" title="Deletar"/>
+                                        <p:ajax event="dialogReturn" update=":ac" />
+                                    </p:commandLink>
+                                    <p:spacer width="10"/>
+                                    <p:commandLink action="#{marcaMB.altMarca(marca)}">
+                                        <h:graphicImage value="/img/edit.png" title="Alterar"/>
+                                        <p:ajax event="dialogReturn" update=":ac" />
+                                    </p:commandLink>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+                        <p:blockUI block="marcas" trigger="marcas">
+                            <p:graphicImage value="/img/ajax-loader3.gif"/><br/>
+                            <h:outputText value="Carregando ..."/>
+                        </p:blockUI>
+                    </p:tab>
+                    <p:tab title="Nova Marca" >
+                        <h:form id="frmNew">
+                            <p:growl id="growl" showDetail="true" />
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Nome da marca"/>
+                                <h:inputText value="#{marcaMB.marca.nome}"/>
+                                <h:outputText/>
+                                <p:commandButton value="Gravar" 
+                                                 action="#{marcaMB.save(marcaMB.marca)}"
+                                                 update=":ac,growl"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </p:tab>
+                </p:accordionPanel>
+            </p:layoutUnit>
+        </p:layout>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <h:form>
-                        <p:menu>
-                            <p:submenu label="Resources">
-                                <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center">
-                    <p:accordionPanel id="ac">
-                        <p:tab title="Relação de Marcas">
-                            <p:dataTable var="marca" value="#{marcaMB.marcas}"
-                                         rows="8" paginator="true" id="marcas"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink}
-                                         {PreviousPageLink} {PageLinks} {NextPageLink}
-                                         {LastPageLink} {RowsPerPageDropdown}"  
-                                         rowsPerPageTemplate="8,10,12" paginatorPosition="bottom">
-                                <p:column headerText="Código" width="50">
-                                    <h:outputText value="#{marca.id}" />
-                                </p:column>
-                                <p:column headerText="Nome">
-                                    <h:outputText value="#{marca.nome}" />
-                                </p:column>
-                                <p:column headerText="Ações">
-                                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>> Ações <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< --> 
-                                    <h:form id="frmAct">
-                                        <p:commandButton value="Remover Marca #{marca.id}" icon="ui-icon-close" actionListener="#{marcaMB.delMarca(marca)}"/>
-                                        <p:spacer width="10"/>
-                                        <p:commandButton value="Alterar Marca #{marca.id}" icon="ui-icon-refresh" actionListener="#{marcaMB.altMarca(marca)}">
-                                            <p:ajax event="dialogReturn" listener="#{marcaMB.ondelMarca}"  />
-                                        </p:commandButton>
-                                    </h:form>
-                                </p:column>
-                            </p:dataTable>
-                            <p:blockUI block="marcas" trigger="marcas">
-                                <p:graphicImage value="/img/ajax-loader3.gif"/><br/>
-                                <h:outputText value="Carregando ..."/>
-                            </p:blockUI>
-                        </p:tab>
-                        <p:tab title="Nova Marca" >
-                            <h:form id="frmNew">
-                                <h:panelGrid columns="2">
-                                    <h:outputText value="Nome da marca"/>
-                                    <h:inputText value="#{marcaMB.marca.nome}"/>
-                                    <h:outputText/>
-                                    <p:commandButton value="Gravar" 
-                                                     action="#{marcaMB.save(marcaMB.marca)}"
-                                                     update=":ac"/>
-                                </h:panelGrid>
-                            </h:form>
-                        </p:tab>
-                    </p:accordionPanel>
-                </p:layoutUnit>
-            </p:layout>
-
-        </h:body>
-
-    </f:view>
+    </h:body>
 </html>
 

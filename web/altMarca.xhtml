@@ -15,14 +15,16 @@
     </h:head>
 
     <h:body>
-        <h:panelGrid columns="2" width="200">
-            <h:outputText value="Id:"/>
-            <h:outputText id="txtIdd" value="#{marcaMB.marcaEd.id}"/>
-            <h:outputText value="Nome: "/> 
-            <h:inputText id="txtMarcad" value="#{marcaMB.marcaEd.nome}"/>
-            <p:commandButton value="Cancelar"/>
-            <p:commandButton value="Alterar" action="#{marcaMB.apagar(marcaMB.marcaEd)}"/>   
-        </h:panelGrid>
+        <h:form>
+            <h:panelGrid columns="2" width="200">
+                <h:outputText value="Id:"/>
+                <h:outputText id="txtIdd" value="#{marcaMB.marcaEd.id}"/>
+                <h:outputText value="Nome: "/> 
+                <h:inputText id="txtMarcad" value="#{marcaMB.marcaEd.nome}"/>
+                <p:commandButton value="Cancelar" actionListener="#{marcaMB.apagarCancel}" />
+                <p:commandButton value="Alterar" action="#{marcaMB.atualizar(marcaMB.marcaEd)}"/>   
+            </h:panelGrid>
+        </h:form>
     </h:body>
 
 </html>

@@ -10,15 +10,14 @@ import br.edu.fema.controller.MarcaJpaController;
 import br.edu.fema.controller.exceptions.IllegalOrphanException;
 import br.edu.fema.controller.exceptions.NonexistentEntityException;
 import br.edu.fema.model.Marca;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 import util.JPAUtil;
 
@@ -30,6 +29,8 @@ import util.JPAUtil;
 @SessionScoped
 public class MarcaMB {
 
+    // Action - realiza ações e navegações.
+    // ActionListener - altera o estado de um objeto (componentes de tela ou suas classes), geralmente com ajax. 
     // Nova marca
     private Marca marca;
     // Edição de Marca
@@ -44,74 +45,75 @@ public class MarcaMB {
         this.marcaEd = null;
         this.marcas = null;
     }
-    
+
     public void delMarca(Marca marca) {
         System.out.println("Apagando " + marca.getNome());
         this.marcaEd = marca;
-        Map<String,Object> options = new HashMap<String, Object>();
-        //options.put("modal", true);
-        //options.put("draggable", false);
-        //options.put("resizable", false);
-        //options.put("contentHeight", 320);
-        options.put("contentWidth", 100);
-        RequestContext.getCurrentInstance().openDialog("delMarca");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 100);
+        options.put("contentWidth", 250);
+        RequestContext.getCurrentInstance().openDialog("delMarca", options, null);
     }
-    
+
     public void altMarca(Marca marca) {
         System.out.println("Apagando " + marca.getNome());
         this.marcaEd = marca;
-        Map<String,Object> options = new HashMap<String, Object>();
-        //options.put("modal", true);
-        //options.put("draggable", false);
-        //options.put("resizable", false);
-        //options.put("contentHeight", 320);
-        //options.put("contentWidth", 100);
-        RequestContext.getCurrentInstance().openDialog("altMarca");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 110);
+        options.put("contentWidth", 280);
+        RequestContext.getCurrentInstance().openDialog("altMarca", options, null);
     }
 
     public void save(Marca marca) {
-        System.out.println("Salvando a marca " + marca.getNome());
-        FacesMessage.Severity severity;
-        String message;
         MarcaJpa marcaJpa = new MarcaJpaController(JPAUtil.getEmf());
         marcaJpa.create(marca);
-        message = marca.getNome() + " - Salva com sucesso";
-        severity = FacesMessage.SEVERITY_INFO;
-        FacesMessage msg = new FacesMessage(severity, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        System.out.println("Salvando a marca " + marca.getNome() + " - " + FacesContext.getCurrentInstance());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca salva", "Id:" + marca.getId() + " - " + marca.getNome());
+        FacesContext.getCurrentInstance().addMessage(null, message);
         this.marca = new Marca();
     }
 
-    public void apagar() {
-        System.out.println("Apagando " + this.marca.getNome());
-        //FacesMessage.Severity severity;
-        //String message;
-        //MarcaJpa marcaJpa = new MarcaJpaController(JPAUtil.getEmf());
-        //try {
-        //    marcaJpa.destroy(marca.getId());
-        //    message = marca.getNome() + " - Deletado";
-        //    severity = FacesMessage.SEVERITY_INFO;
-        //} catch (IllegalOrphanException ex) {
-        //    message = marca.getNome() + " - Esta marca tem modelo ligado a ela";
-        //    severity = FacesMessage.SEVERITY_ERROR;
-        //} catch (NonexistentEntityException ex) {
-        //    message = marca.getNome() + " - Não exixte esta marca";
-        //    severity = FacesMessage.SEVERITY_ERROR;
-        //}
-        //FacesMessage msg = new FacesMessage(severity, message, null);
-        //FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void apagar(Marca marca) {
+        System.out.println("Apagando " + marca.getNome() + " - " + marca.getId());
+        FacesMessage.Severity severity = null;
+        String message = "???";
+        MarcaJpa marcaJpa = new MarcaJpaController(JPAUtil.getEmf());
+        try {
+            marcaJpa.destroy(marca.getId());
+            message = marca.getNome() + " - Deletado";
+            severity = FacesMessage.SEVERITY_INFO;
+        } catch (IllegalOrphanException ex) {
+            message = marca.getNome() + " - Esta marca tem modelo ligado a ela";
+            severity = FacesMessage.SEVERITY_ERROR;
+        } catch (NonexistentEntityException ex) {
+            message = marca.getNome() + " - Não exixte esta marca";
+            severity = FacesMessage.SEVERITY_ERROR;
+        } finally {
+            FacesMessage msg = new FacesMessage(severity, message, null);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            RequestContext.getCurrentInstance().closeDialog("delMarca");
+        }
+    }
+
+    public void apagarCancel(ActionEvent event) {
         RequestContext.getCurrentInstance().closeDialog("delMarca");
     }
 
-    public void atualizar() {
+    public void atualizar(Marca marca) {
         System.out.println("Atualizando " + marcaEd.getNome());
         FacesMessage.Severity severity = null;
         String message = null;
         MarcaJpa marcaJpa = new MarcaJpaController(JPAUtil.getEmf());
         Marca marcaAtu;
         try {
-            marcaAtu = marcaJpa.findMarca(this.marcaEd.getId());
-            marcaAtu.setNome(this.marcaEd.getNome());
+            marcaAtu = marcaJpa.findMarca(marcaEd.getId());
+            marcaAtu.setNome(marcaEd.getNome());
             marcaJpa.edit(marcaAtu);
             message = marcaEd.getNome() + " - Alterada";
             severity = FacesMessage.SEVERITY_INFO;
@@ -124,10 +126,15 @@ public class MarcaMB {
         } catch (Exception ex) {
             message = marcaEd.getNome() + " - Exception";
             severity = FacesMessage.SEVERITY_ERROR;
+        } finally {
+            FacesMessage msg = new FacesMessage(severity, message, null);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            RequestContext.getCurrentInstance().closeDialog("altMarca");
         }
+    }
 
-        FacesMessage msg = new FacesMessage(severity, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void atualizarCancel(ActionEvent event) {
+        RequestContext.getCurrentInstance().closeDialog("altMarca");
     }
 
     public void edit(Marca marca) {
